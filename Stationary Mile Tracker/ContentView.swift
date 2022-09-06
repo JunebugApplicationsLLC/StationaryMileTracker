@@ -5,17 +5,31 @@
 //  Created by Erica Stevens on 9/6/22.
 //
 
+import CalendarProgressTracker
 import SwiftUI
 
 struct ContentView: View {
+    @State var milesLogged = ""
+    @FocusState var isFocused: Bool
+    @Environment(\.calendar) var calendar: Calendar
+    @Environment(\.timeZone) var timeZone: TimeZone
+    @State var showingMileEntryPopover = false
+    @State var selectedDate: Day?
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+
+        CalendarProgressTracker(calendar: calendar, timeZone: timeZone) { date in
+            selectedDate = date
+            showingMileEntryPopover.toggle()
         }
-        .padding()
+        .popover(isPresented: $showingMileEntryPopover) {
+            VStack {
+                Text("\($selectedDate.wrappedValue?.name ?? "Foo") \($selectedDate.wrappedValue?.date ?? 1)")
+                TextField("Miles:", text: $milesLogged)
+                    .focused($isFocused)
+                    .keyboardType(.decimalPad)
+            }
+        }
     }
 }
 
