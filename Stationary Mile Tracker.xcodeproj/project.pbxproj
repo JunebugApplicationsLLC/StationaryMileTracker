@@ -12,6 +12,9 @@
 		0729667E28C717180063823A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0729667D28C717180063823A /* Assets.xcassets */; };
 		0729668128C717180063823A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0729668028C717180063823A /* Preview Assets.xcassets */; };
 		0729668A28C71C350063823A /* CalendarProgressTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 0729668928C71C350063823A /* CalendarProgressTracker */; };
+		0729668C28C7EBB10063823A /* TrackedMileage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668B28C7EBB10063823A /* TrackedMileage.swift */; };
+		0729668E28C7EF450063823A /* TrackedMileageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */; };
+		0729669028C7EF840063823A /* CalendarTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668F28C7EF840063823A /* CalendarTrackerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +24,9 @@
 		0729667D28C717180063823A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0729668028C717180063823A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0729668728C71BF50063823A /* CalendarProgressTracker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CalendarProgressTracker; path = ../CalendarProgressTracker; sourceTree = "<group>"; };
+		0729668B28C7EBB10063823A /* TrackedMileage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedMileage.swift; sourceTree = "<group>"; };
+		0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedMileageViewModel.swift; sourceTree = "<group>"; };
+		0729668F28C7EF840063823A /* CalendarTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTrackerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,9 @@
 			children = (
 				0729667928C717170063823A /* Stationary_Mile_TrackerApp.swift */,
 				0729667B28C717170063823A /* ContentView.swift */,
+				0729668F28C7EF840063823A /* CalendarTrackerView.swift */,
+				0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */,
+				0729668B28C7EBB10063823A /* TrackedMileage.swift */,
 				0729667D28C717180063823A /* Assets.xcassets */,
 				0729667F28C717180063823A /* Preview Content */,
 			);
@@ -153,6 +162,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0729667C28C717170063823A /* ContentView.swift in Sources */,
+				0729669028C7EF840063823A /* CalendarTrackerView.swift in Sources */,
+				0729668C28C7EBB10063823A /* TrackedMileage.swift in Sources */,
+				0729668E28C7EF450063823A /* TrackedMileageViewModel.swift in Sources */,
 				0729667A28C717170063823A /* Stationary_Mile_TrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,27 +9,10 @@ import CalendarProgressTracker
 import SwiftUI
 
 struct ContentView: View {
-    @State var milesLogged = ""
-    @FocusState var isFocused: Bool
     @Environment(\.calendar) var calendar: Calendar
     @Environment(\.timeZone) var timeZone: TimeZone
-    @State var showingMileEntryPopover = false
-    @State var selectedDate: Day?
-    
     var body: some View {
-
-        CalendarProgressTracker(calendar: calendar, timeZone: timeZone) { date in
-            selectedDate = date
-            showingMileEntryPopover.toggle()
-        }
-        .popover(isPresented: $showingMileEntryPopover) {
-            VStack {
-                Text("\($selectedDate.wrappedValue?.name ?? "Foo") \($selectedDate.wrappedValue?.date ?? 1)")
-                TextField("Miles:", text: $milesLogged)
-                    .focused($isFocused)
-                    .keyboardType(.decimalPad)
-            }
-        }
+        CalendarTrackerView(viewModel: TrackedMileageViewModel())
     }
 }
 
