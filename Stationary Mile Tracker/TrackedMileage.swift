@@ -13,3 +13,13 @@ struct TrackedMileage: Identifiable {
     var day: Day
     @Binding var miles: Int
 }
+
+extension TrackedMileage: Comparable {
+    static func < (lhs: TrackedMileage, rhs: TrackedMileage) -> Bool {
+        return lhs.day.date < rhs.day.date
+    }
+    
+    static func == (lhs: TrackedMileage, rhs: TrackedMileage) -> Bool {
+        return lhs.day.date == rhs.day.date
+    }
+}
