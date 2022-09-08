@@ -9,7 +9,7 @@ import CalendarProgressTracker
 import SwiftUI
 
 struct CalendarTrackerView: View {
-    @State var milesLogged = ""
+    @State var dateIsHighlighted = false
     @FocusState var isFocused: Bool
     @Environment(\.calendar) var calendar: Calendar
     @Environment(\.timeZone) var timeZone: TimeZone
@@ -37,7 +37,9 @@ struct CalendarTrackerView: View {
     }
     
     var body: some View {
-        CalendarProgressTracker(calendar: calendar, timeZone: timeZone) { date in
+        CalendarProgressTracker(calendar: calendar, timeZone: timeZone) {
+            toggleHighlight()
+        } userTappedDateAction: { date in
             selectedDay = date
         }
         .sheet(item: $selectedDay, onDismiss: {
@@ -49,6 +51,11 @@ struct CalendarTrackerView: View {
                     .keyboardType(.decimalPad)
             }
         }
+    }
+    
+    func toggleHighlight() -> Bool {
+        dateIsHighlighted.toggle()
+        return dateIsHighlighted
     }
 }
 
