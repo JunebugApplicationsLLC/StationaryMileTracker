@@ -21,13 +21,25 @@ struct ContentView: View {
         }
         return trackedMiles
     }
+    
+    var trackedDays: [Day] {
+        var days: [Day] = []
+        let sortedTrackedDays = trackedMileageViewModel.milesTrackedForDay.keys.sorted { day1, day2 in
+            day1 < day2
+        }
+        sortedTrackedDays.forEach { day in
+            days.append(day)
+        }
+        return days
+    }
+    
     var body: some View {
         VStack {
             CalendarTrackerView(viewModel: trackedMileageViewModel)
-            Chart(Array(trackedMileageViewModel.milesTrackedForDay.keys)) { key in
+            Chart(trackedDays) { day in
                 LineMark(
-                    x: PlottableValue.value("Date", "\(key.name) \(key.date)") ,
-                    y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[key] ?? 0)
+                    x: PlottableValue.value("Date", "\(day.name) \(day.date)") ,
+                    y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
                 )
             }
             .padding()
