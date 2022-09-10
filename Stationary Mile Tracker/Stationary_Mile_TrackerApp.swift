@@ -15,7 +15,7 @@ struct Stationary_Mile_TrackerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(trackedMileageViewModel: TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(monthViewModel: MonthViewModel(calendar: calendar, timeZone: timeZone))))
+            ContentView(trackedMileageViewModel: TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(calendar, timeZone)))
         }
     }
 }

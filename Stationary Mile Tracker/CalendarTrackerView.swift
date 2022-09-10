@@ -9,7 +9,6 @@ import CalendarProgressTracker
 import SwiftUI
 
 struct CalendarTrackerView: View {
-    @State var dateIsHighlighted = false
     @FocusState var isFocused: Bool
     @State var selectedDay: Day?
     @ObservedObject internal var trackedMileageViewModel: TrackedMileageViewModel
@@ -23,8 +22,7 @@ struct CalendarTrackerView: View {
                 return 0
             }
         } set: { updatedValue in
-            guard let day = selectedDay,
-            updatedValue > 0 else { return }
+            guard let day = selectedDay else { return }
             trackedMileageViewModel.update(day: day, for: updatedValue)
         }
     }
@@ -34,7 +32,7 @@ struct CalendarTrackerView: View {
     }
     
     var body: some View {
-        CalendarProgressTracker(monthViewModel: trackedMileageViewModel.highlightedDateViewModel.monthViewModel) { date in
+        CalendarProgressTracker(trackedMileageViewModel.highlightedDateViewModel) { date in
             selectedDay = date
         }
         .sheet(item: $selectedDay) { selectedDay in
