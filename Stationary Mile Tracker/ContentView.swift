@@ -9,9 +9,15 @@ import CalendarProgressTracker
 import SwiftUI
 import Charts
 
+enum ChartStyleType: String, CaseIterable {
+    case line
+    case bar
+}
+
 struct ContentView: View {
     @ObservedObject var trackedMileageViewModel: TrackedMileageViewModel
     @State var goal: Int = 500
+    @State var selectedChartStyleTypeIndex = 0
 
     var body: some View {
         NavigationView {
@@ -36,8 +42,16 @@ struct ContentView: View {
     }
     
     var milesTrendChart: some View {
+        
         VStack {
-           goalButton
+            Picker("Chart Type", selection: $selectedChartStyleTypeIndex) {
+                ForEach(0..<ChartStyleType.allCases.count) { index in
+                    Text(ChartStyleType.allCases[index].rawValue.capitalized)
+                }
+            }
+            .pickerStyle(.segmented)
+            .frame(width: 100)
+            
             if trackedMileageViewModel.trackedDays.count < 2 {
                 Spacer()
                 Text("Log more miles to see trends over time")
@@ -49,18 +63,48 @@ struct ContentView: View {
                         .font(.subheadline)
                         .bold()
                     Chart(trackedMileageViewModel.trackedDays) { day in
-                        LineMark (
-                            x: PlottableValue.value("Date", "\(day.name) \(day.date)") ,
-                            y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
-                        )
-                        .foregroundStyle(.pink)
+                        if ChartStyleType.allCases[$selectedChartStyleTypeIndex.wrappedValue] == ChartStyleType.bar {
+                            BarMark (
+                                x: PlottableValue.value("Date", "\(day.name) \(day.date)") ,
+                                y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
+                            )
+                            .foregroundStyle(.pink)
+                            .annotation {
+                                if let miles = trackedMileageViewModel.milesTrackedForDay[day] {
+                                    Text(verbatim: "\(miles)")
+                                        .font(.caption)
+                                } else {
+                                    EmptyView()
+                                }
+                            }
+                        } else {
+                            LineMark (
+                                x: PlottableValue.value("Date", "\(day.name) \(day.date)") ,
+                                y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
+                            )
+                            .foregroundStyle(.pink)
+                            .symbol(Circle().strokeBorder(lineWidth: 2.0))
+                            .annotation {
+                                if let miles = trackedMileageViewModel.milesTrackedForDay[day] {
+                                    Text(verbatim: "\(miles)")
+                                        .font(.caption)
+                                } else {
+                                    EmptyView()
+                                }
+                            }
+                        }
                     }
                 }
                 .padding()
             }
-            Text("Total Miles: \(trackedMileageViewModel.totalMilesTracked)")
+            HStack {
+                Text("Total Miles: \(trackedMileageViewModel.totalMilesTracked) / ")
+                goalButton
+            }
+            
         }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
