@@ -13,6 +13,25 @@ class TrackedMileageViewModel: ObservableObject {
     @Published var milesTrackedForDay: [Day: Int] = [:]
     @ObservedObject var highlightedDateViewModel: HighlightedDateViewModel
     
+    var totalMilesTracked: Int {
+        var trackedMiles = 0
+        milesTrackedForDay.forEach { day, miles in
+            trackedMiles += miles
+        }
+        return trackedMiles
+    }
+    
+    var trackedDays: [Day] {
+        var days: [Day] = []
+        let sortedTrackedDays = milesTrackedForDay.keys.sorted { day1, day2 in
+            day1 < day2
+        }
+        sortedTrackedDays.forEach { day in
+            days.append(day)
+        }
+        return days
+    }
+    
     init(milesTrackedForDay: [Day : Int] = [:], highlightedDateViewModel: HighlightedDateViewModel) {
         self.milesTrackedForDay = milesTrackedForDay
         self.highlightedDateViewModel = highlightedDateViewModel

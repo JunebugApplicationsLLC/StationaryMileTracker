@@ -10,30 +10,9 @@ import SwiftUI
 import Charts
 
 struct ContentView: View {
-    @Environment(\.calendar) var calendar: Calendar
-    @Environment(\.timeZone) var timeZone: TimeZone
     @ObservedObject var trackedMileageViewModel: TrackedMileageViewModel
-    @State var goal: Int = 50
+    @State var goal: Int = 500
 
-    var totalMilesTracked: Int {
-        var trackedMiles = 0
-        trackedMileageViewModel.milesTrackedForDay.forEach { day, miles in
-            trackedMiles += miles
-        }
-        return trackedMiles
-    }
-    
-    var trackedDays: [Day] {
-        var days: [Day] = []
-        let sortedTrackedDays = trackedMileageViewModel.milesTrackedForDay.keys.sorted { day1, day2 in
-            day1 < day2
-        }
-        sortedTrackedDays.forEach { day in
-            days.append(day)
-        }
-        return days
-    }
-    
     var body: some View {
         NavigationView {
             GeometryReader { proxy in
@@ -48,7 +27,8 @@ struct ContentView: View {
     }
     
     var goalButton: some View {
-        Text("Goal: 500")
+        Text("Goal: \(goal)")
+            .bold()
             .padding(8)
             .background(Color.blue)
             .foregroundColor(.white)
@@ -58,7 +38,7 @@ struct ContentView: View {
     var milesTrendChart: some View {
         VStack {
            goalButton
-            if trackedDays.count < 2 {
+            if trackedMileageViewModel.trackedDays.count < 2 {
                 Spacer()
                 Text("Log more miles to see trends over time")
                     .font(.caption).italic()
@@ -67,8 +47,9 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Miles Per Tracked Day")
                         .font(.subheadline)
-                    Chart(trackedDays) { day in
-                        LineMark(
+                        .bold()
+                    Chart(trackedMileageViewModel.trackedDays) { day in
+                        LineMark (
                             x: PlottableValue.value("Date", "\(day.name) \(day.date)") ,
                             y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
                         )
@@ -77,13 +58,13 @@ struct ContentView: View {
                 }
                 .padding()
             }
-            Text("Total Miles: \(totalMilesTracked)")
+            Text("Total Miles: \(trackedMileageViewModel.totalMilesTracked)")
         }
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView(trackedMileageViewModel: TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(Calendar(identifier: .gregorian), TimeZone(identifier: "EST")!)))
+    }
+}

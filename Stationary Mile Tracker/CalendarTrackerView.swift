@@ -46,8 +46,8 @@ struct CalendarTrackerView: View {
     }
 }
 
-//struct CalendarTrackerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CalendarTrackerView(viewModel: TrackedMileageViewModel())
-//    }
-//}
+struct CalendarTrackerView_Previews: PreviewProvider {
+    static var previews: some View {
+        CalendarTrackerView(viewModel: TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(Calendar(identifier: .gregorian), TimeZone(identifier: "EST")!)))
+    }
+}
