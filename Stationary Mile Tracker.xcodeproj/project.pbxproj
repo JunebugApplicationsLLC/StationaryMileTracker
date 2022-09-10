@@ -15,6 +15,8 @@
 		0729668C28C7EBB10063823A /* TrackedMileage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668B28C7EBB10063823A /* TrackedMileage.swift */; };
 		0729668E28C7EF450063823A /* TrackedMileageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */; };
 		0729669028C7EF840063823A /* CalendarTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668F28C7EF840063823A /* CalendarTrackerView.swift */; };
+		07FA0A7328CD33C6003A4FE7 /* MilesChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA0A7228CD33C6003A4FE7 /* MilesChartView.swift */; };
+		07FA0A7528CD33E3003A4FE7 /* ChartStyleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA0A7428CD33E3003A4FE7 /* ChartStyleType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		0729668B28C7EBB10063823A /* TrackedMileage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedMileage.swift; sourceTree = "<group>"; };
 		0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedMileageViewModel.swift; sourceTree = "<group>"; };
 		0729668F28C7EF840063823A /* CalendarTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTrackerView.swift; sourceTree = "<group>"; };
+		07FA0A7228CD33C6003A4FE7 /* MilesChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilesChartView.swift; sourceTree = "<group>"; };
+		07FA0A7428CD33E3003A4FE7 /* ChartStyleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartStyleType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +66,10 @@
 		0729667828C717170063823A /* Stationary Mile Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				0729669328CD332F0063823A /* Models */,
+				0729669228CD33180063823A /* ViewModels */,
+				0729669128CD330D0063823A /* Views */,
 				0729667928C717170063823A /* Stationary_Mile_TrackerApp.swift */,
-				0729667B28C717170063823A /* ContentView.swift */,
-				0729668F28C7EF840063823A /* CalendarTrackerView.swift */,
-				0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */,
-				0729668B28C7EBB10063823A /* TrackedMileage.swift */,
 				0729667D28C717180063823A /* Assets.xcassets */,
 				0729667F28C717180063823A /* Preview Content */,
 			);
@@ -86,6 +89,33 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0729669128CD330D0063823A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0729668F28C7EF840063823A /* CalendarTrackerView.swift */,
+				0729667B28C717170063823A /* ContentView.swift */,
+				07FA0A7228CD33C6003A4FE7 /* MilesChartView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0729669228CD33180063823A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		0729669328CD332F0063823A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0729668B28C7EBB10063823A /* TrackedMileage.swift */,
+				07FA0A7428CD33E3003A4FE7 /* ChartStyleType.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,8 +191,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07FA0A7528CD33E3003A4FE7 /* ChartStyleType.swift in Sources */,
 				0729667C28C717170063823A /* ContentView.swift in Sources */,
 				0729669028C7EF840063823A /* CalendarTrackerView.swift in Sources */,
+				07FA0A7328CD33C6003A4FE7 /* MilesChartView.swift in Sources */,
 				0729668C28C7EBB10063823A /* TrackedMileage.swift in Sources */,
 				0729668E28C7EF450063823A /* TrackedMileageViewModel.swift in Sources */,
 				0729667A28C717170063823A /* Stationary_Mile_TrackerApp.swift in Sources */,

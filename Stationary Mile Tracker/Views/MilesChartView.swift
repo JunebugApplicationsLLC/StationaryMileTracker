@@ -1,48 +1,20 @@
 //
-//  ContentView.swift
+//  MilesChartView.swift
 //  Stationary Mile Tracker
 //
-//  Created by Erica Stevens on 9/6/22.
+//  Created by Erica Stevens on 9/10/22.
 //
 
 import CalendarProgressTracker
-import SwiftUI
 import Charts
+import SwiftUI
 
-enum ChartStyleType: String, CaseIterable {
-    case line
-    case bar
-}
-
-struct ContentView: View {
-    @ObservedObject var trackedMileageViewModel: TrackedMileageViewModel
+struct MilesChartView: View {
+    @EnvironmentObject internal var trackedMileageViewModel: TrackedMileageViewModel
     @State var goal: Int = 500
     @State var selectedChartStyleTypeIndex = 0
-
+    
     var body: some View {
-        NavigationView {
-            GeometryReader { proxy in
-                VStack {
-                    CalendarTrackerView(viewModel: trackedMileageViewModel)
-                    milesTrendChart
-                        .frame(height: proxy.size.height * 0.4)
-                }
-            }
-            .navigationTitle("Monthly Mile Tracker")
-        }
-    }
-    
-    var goalButton: some View {
-        Text("Goal: \(goal)")
-            .bold()
-            .padding(8)
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8.0)
-    }
-    
-    var milesTrendChart: some View {
-        
         VStack {
             Picker("Chart Type", selection: $selectedChartStyleTypeIndex) {
                 ForEach(0..<ChartStyleType.allCases.count) { index in
@@ -86,8 +58,12 @@ struct ContentView: View {
                             .symbol(Circle().strokeBorder(lineWidth: 2.0))
                             .annotation {
                                 if let miles = trackedMileageViewModel.milesTrackedForDay[day] {
+                                    
                                     Text(verbatim: "\(miles)")
                                         .font(.caption)
+                                        .onAppear {
+                                            print("\(miles)")
+                                        }
                                 } else {
                                     EmptyView()
                                 }
@@ -101,14 +77,21 @@ struct ContentView: View {
                 Text("Total Miles: \(trackedMileageViewModel.totalMilesTracked) / ")
                 goalButton
             }
-            
         }
     }
-    
+    var goalButton: some View {
+        Text("Goal: \(goal)")
+            .bold()
+            .padding(8)
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(8.0)
+    }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct MilesChartView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(trackedMileageViewModel: TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(Calendar(identifier: .gregorian), TimeZone(identifier: "EST")!)))
+        MilesChartView()
+            .environmentObject(TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(Calendar(identifier: .gregorian), TimeZone(identifier: "EST")!)))
     }
 }

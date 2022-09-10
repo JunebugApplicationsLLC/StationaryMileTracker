@@ -11,7 +11,7 @@ import SwiftUI
 struct CalendarTrackerView: View {
     @FocusState var isFocused: Bool
     @State var selectedDay: Day?
-    @ObservedObject internal var trackedMileageViewModel: TrackedMileageViewModel
+    @EnvironmentObject internal var trackedMileageViewModel: TrackedMileageViewModel
     
     private var milesForDay: Binding<Int> {
         Binding {
@@ -27,11 +27,18 @@ struct CalendarTrackerView: View {
         }
     }
     
-    init(viewModel: TrackedMileageViewModel) {
-        trackedMileageViewModel = viewModel
+    var body: some View {
+        GeometryReader { proxy in
+            VStack {
+                calendarView
+                MilesChartView()
+                    .environmentObject(trackedMileageViewModel)
+                    .frame(height: proxy.size.height * 0.4)
+            }
+        }
     }
     
-    var body: some View {
+    var calendarView: some View {
         CalendarProgressTracker(trackedMileageViewModel.highlightedDateViewModel) { date in
             selectedDay = date
         }
@@ -48,6 +55,7 @@ struct CalendarTrackerView: View {
 
 struct CalendarTrackerView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarTrackerView(viewModel: TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(Calendar(identifier: .gregorian), TimeZone(identifier: "EST")!)))
+        CalendarTrackerView()
+            .environmentObject(TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(Calendar(identifier: .gregorian), TimeZone(identifier: "EST")!)))
     }
 }
