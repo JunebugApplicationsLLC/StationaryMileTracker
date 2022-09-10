@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import CalendarProgressTracker
 
 @main
 struct Stationary_Mile_TrackerApp: App {
+    @Environment(\.calendar) var calendar: Calendar
+    @Environment(\.timeZone) var timeZone: TimeZone
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(trackedMileageViewModel: TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(monthViewModel: MonthViewModel(calendar: calendar, timeZone: timeZone))))
         }
     }
 }

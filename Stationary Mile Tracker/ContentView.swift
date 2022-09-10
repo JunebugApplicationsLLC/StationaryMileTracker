@@ -12,8 +12,9 @@ import Charts
 struct ContentView: View {
     @Environment(\.calendar) var calendar: Calendar
     @Environment(\.timeZone) var timeZone: TimeZone
-    @ObservedObject var trackedMileageViewModel = TrackedMileageViewModel()
+    @ObservedObject var trackedMileageViewModel: TrackedMileageViewModel
     @State var goal: Int = 50
+
     var totalMilesTracked: Int {
         var trackedMiles = 0
         trackedMileageViewModel.milesTrackedForDay.forEach { day, miles in
@@ -49,8 +50,8 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

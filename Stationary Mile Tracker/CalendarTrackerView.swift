@@ -11,29 +11,20 @@ import SwiftUI
 struct CalendarTrackerView: View {
     @State var dateIsHighlighted = false
     @FocusState var isFocused: Bool
-    @Environment(\.calendar) var calendar: Calendar
-    @Environment(\.timeZone) var timeZone: TimeZone
     @State var selectedDay: Day?
     @ObservedObject internal var trackedMileageViewModel: TrackedMileageViewModel
     
     private var milesForDay: Binding<Int> {
         Binding {
-            guard var day = selectedDay else {
-                return 0
-            }
-            day.should(highlightDay: true)
+            guard let day = selectedDay else { return 0 }
             if let miles = trackedMileageViewModel.milesTrackedForDay[day] {
                 return miles
             } else {
-                day.should(highlightDay: false)
                 return 0
             }
         } set: { updatedValue in
-            guard var day = selectedDay,
-            updatedValue > 0 else {
-                return
-            }
-            day.should(highlightDay: true)
+            guard let day = selectedDay,
+            updatedValue > 0 else { return }
             trackedMileageViewModel.update(day: day, for: updatedValue)
         }
     }
@@ -43,7 +34,7 @@ struct CalendarTrackerView: View {
     }
     
     var body: some View {
-        CalendarProgressTracker(calendar: calendar, timeZone: timeZone) { date in
+        CalendarProgressTracker(monthViewModel: trackedMileageViewModel.highlightedDateViewModel.monthViewModel) { date in
             selectedDay = date
         }
         .sheet(item: $selectedDay) { selectedDay in
@@ -57,8 +48,8 @@ struct CalendarTrackerView: View {
     }
 }
 
-struct CalendarTrackerView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarTrackerView(viewModel: TrackedMileageViewModel())
-    }
-}
+//struct CalendarTrackerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CalendarTrackerView(viewModel: TrackedMileageViewModel())
+//    }
+//}
