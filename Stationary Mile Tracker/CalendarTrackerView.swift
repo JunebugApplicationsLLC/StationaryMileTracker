@@ -18,16 +18,22 @@ struct CalendarTrackerView: View {
     
     private var milesForDay: Binding<Int> {
         Binding {
-            guard let day = $selectedDay.wrappedValue else {
+            guard var day = selectedDay else {
                 return 0
             }
+            day.should(highlightDay: true)
             if let miles = trackedMileageViewModel.milesTrackedForDay[day] {
                 return miles
             } else {
+                day.should(highlightDay: false)
                 return 0
             }
         } set: { updatedValue in
-            guard let day = $selectedDay.wrappedValue else { return }
+            guard var day = selectedDay,
+            updatedValue > 0 else {
+                return
+            }
+            day.should(highlightDay: true)
             trackedMileageViewModel.update(day: day, for: updatedValue)
         }
     }
@@ -37,13 +43,10 @@ struct CalendarTrackerView: View {
     }
     
     var body: some View {
-        CalendarProgressTracker(calendar: calendar, timeZone: timeZone) {
-            toggleHighlight()
-        } userTappedDateAction: { date in
+        CalendarProgressTracker(calendar: calendar, timeZone: timeZone) { date in
             selectedDay = date
         }
-        .sheet(item: $selectedDay, onDismiss: {
-        }) { selectedDay in
+        .sheet(item: $selectedDay) { selectedDay in
             VStack {
                 Text("\(selectedDay.name) \(selectedDay.date)")
                 TextField("Miles", value: milesForDay, formatter: NumberFormatter())
@@ -51,11 +54,6 @@ struct CalendarTrackerView: View {
                     .keyboardType(.decimalPad)
             }
         }
-    }
-    
-    func toggleHighlight() -> Bool {
-        dateIsHighlighted.toggle()
-        return dateIsHighlighted
     }
 }
 
