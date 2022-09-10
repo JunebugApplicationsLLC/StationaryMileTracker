@@ -15,14 +15,25 @@ struct MilesChartView: View {
     @State var selectedChartStyleTypeIndex = 0
     
     var body: some View {
-        VStack {
-            Picker("Chart Type", selection: $selectedChartStyleTypeIndex) {
-                ForEach(0..<ChartStyleType.allCases.count) { index in
-                    Text(ChartStyleType.allCases[index].rawValue.capitalized)
+        VStack(spacing: 0) {
+            HStack( alignment: .center, spacing: 0) {
+               dailyGoalButton
+                Spacer()
+                VStack(spacing: 2) {
+                    Text("CHART TYPE")
+                        .font(.caption)
+                        .bold()
+                    Picker("Chart Type", selection: $selectedChartStyleTypeIndex) {
+                        ForEach(0..<ChartStyleType.allCases.count) { index in
+                            Text(ChartStyleType.allCases[index].rawValue.capitalized)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 100)
                 }
             }
-            .pickerStyle(.segmented)
-            .frame(width: 100)
+            .padding([.leading, .trailing], 20)
+            .opacity(trackedMileageViewModel.trackedDays.count < 2 ? 0 : 1)
             
             if trackedMileageViewModel.trackedDays.count < 2 {
                 Spacer()
@@ -73,14 +84,24 @@ struct MilesChartView: View {
                 }
                 .padding()
             }
-            HStack {
+            HStack(spacing: 0.0) {
                 Text("Total Miles: \(trackedMileageViewModel.totalMilesTracked) / ")
-                goalButton
+                monthlyGoalButton
             }
         }
     }
-    var goalButton: some View {
-        Text("Goal: \(goal)")
+    
+    var dailyGoalButton: some View {
+        Text("Daily Goal: 15 miles")
+            .bold()
+            .padding(8)
+            .background(Color.cyan)
+            .foregroundColor(.white)
+            .cornerRadius(8.0)
+    }
+    
+    var monthlyGoalButton: some View {
+        Text("Monthly Goal: \(goal)")
             .bold()
             .padding(8)
             .background(Color.blue)

@@ -29,7 +29,7 @@ struct CalendarTrackerView: View {
     
     var body: some View {
         GeometryReader { proxy in
-            VStack {
+            VStack(spacing: 8) {
                 calendarView
                 MilesChartView()
                     .frame(height: proxy.size.height * 0.4)
