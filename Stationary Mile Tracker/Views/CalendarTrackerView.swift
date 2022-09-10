@@ -32,7 +32,6 @@ struct CalendarTrackerView: View {
             VStack {
                 calendarView
                 MilesChartView()
-                    .environmentObject(trackedMileageViewModel)
                     .frame(height: proxy.size.height * 0.4)
             }
         }
