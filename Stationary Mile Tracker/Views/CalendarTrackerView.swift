@@ -43,7 +43,9 @@ struct CalendarTrackerView: View {
         }
         .sheet(item: $selectedDay) { selectedDay in
             VStack(alignment: .center) {
-                Text("\(selectedDay.name) \(selectedDay.date)")
+                Text("Log Miles for\n\(selectedDay.fullDayName()), \(selectedDay.monthName) \(selectedDay.date):")
+                    .font(.title)
+                    .multilineTextAlignment(.center)
                 TextField(value: milesForDay, format: .number) {
                     Text("Miles")
                 }

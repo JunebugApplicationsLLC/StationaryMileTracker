@@ -11,7 +11,8 @@ import SwiftUI
 
 struct TrackedMilesChartView: View {
     @EnvironmentObject internal var trackedMileageViewModel: TrackedMileageViewModel
-    @State var goal: Int = 500
+    @State var monthlyGoal = 500
+    @State var dailyGoal = 15
     @State var selectedChartStyleTypeIndex = 0
     
     var body: some View {
@@ -53,7 +54,7 @@ struct TrackedMilesChartView: View {
                                 x: PlottableValue.value("Date", "\(day.name) \(day.date)") ,
                                 y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
                             )
-                            .foregroundStyle(.pink)
+                            .foregroundStyle(trackedMileageViewModel.milesTrackedForDay[day] ?? 0 > dailyGoal ? .cyan : .pink)
                             .annotation {
                                 if let miles = trackedMileageViewModel.milesTrackedForDay[day] {
                                     Text(verbatim: "\(miles)")
@@ -82,6 +83,17 @@ struct TrackedMilesChartView: View {
                                 }
                             }
                         }
+                        RuleMark(
+                            y: .value("Average", trackedMileageViewModel.averageMilesPerDay)
+                        )
+                        .foregroundStyle(.green)
+                        .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [3, 5]))
+                        .annotation(position: .trailing) {
+                            Text("avg")
+                                .font(.caption2)
+                                .bold()
+                                .foregroundStyle(.green)
+                        }
                     }
                 }
                 .padding()
@@ -105,7 +117,7 @@ struct TrackedMilesChartView: View {
     }
     
     var dailyGoalButton: some View {
-        Text("Daily Goal: 15 miles")
+        Text("Daily Goal: \(dailyGoal) miles")
             .bold()
             .padding(8)
             .background(Color.cyan)
@@ -116,7 +128,7 @@ struct TrackedMilesChartView: View {
     }
     
     var monthlyGoalButton: some View {
-        Text("Monthly Goal: \(goal)")
+        Text("Monthly Goal: \(monthlyGoal)")
             .bold()
             .padding(8)
             .background(Color.blue)

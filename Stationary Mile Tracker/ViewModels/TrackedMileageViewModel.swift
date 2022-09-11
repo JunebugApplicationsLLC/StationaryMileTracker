@@ -32,6 +32,10 @@ class TrackedMileageViewModel: ObservableObject {
         return days
     }
     
+    var averageMilesPerDay: Int {
+        return totalMilesTracked / trackedDays.count
+    }
+    
     init(milesTrackedForDay: [Day : Int] = [:], highlightedDateViewModel: HighlightedDateViewModel) {
         self.milesTrackedForDay = milesTrackedForDay
         self.highlightedDateViewModel = highlightedDateViewModel
