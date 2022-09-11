@@ -48,39 +48,27 @@ struct TrackedMilesChartView: View {
                     Text("Miles Per Tracked Day")
                         .font(.subheadline)
                         .bold()
-                    Chart(trackedMileageViewModel.trackedDays) { day in
+                    Chart(trackedMileageViewModel.trackedDays) { trackedDay in
                         if ChartStyleType.allCases[$selectedChartStyleTypeIndex.wrappedValue] == ChartStyleType.bar {
                             BarMark (
-                                x: PlottableValue.value("Date", "\(day.name) \(day.date)") ,
-                                y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
+                                x: PlottableValue.value("Date", "\(trackedDay.day.name) \(trackedDay.day.date)") ,
+                                y: PlottableValue.value("Miles", trackedDay.miles)
                             )
-                            .foregroundStyle(trackedMileageViewModel.milesTrackedForDay[day] ?? 0 > dailyGoal ? .cyan : .pink)
+                            .foregroundStyle(trackedDay.miles  > dailyGoal ? .cyan : .pink)
                             .annotation {
-                                if let miles = trackedMileageViewModel.milesTrackedForDay[day] {
-                                    Text(verbatim: "\(miles)")
+                                Text(verbatim: "\(trackedDay.miles)")
                                         .font(.caption)
-                                } else {
-                                    EmptyView()
-                                }
                             }
                         } else {
                             LineMark (
-                                x: PlottableValue.value("Date", "\(Month.monthValue(for: day.monthName))/\(day.date)") ,
-                                y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
+                                x: PlottableValue.value("Date", "\(Month.monthValue(for: trackedDay.day.monthName))/\(trackedDay.day.date)") ,
+                                y: PlottableValue.value("Miles", trackedDay.miles)
                             )
                             .foregroundStyle(.pink)
                             .symbol(Circle().strokeBorder(lineWidth: 2.0))
                             .annotation {
-                                if let miles = trackedMileageViewModel.milesTrackedForDay[day] {
-                                    
-                                    Text(verbatim: "\(miles)")
+                                Text(verbatim: "\(trackedDay.miles)")
                                         .font(.caption)
-                                        .onAppear {
-                                            print("\(miles)")
-                                        }
-                                } else {
-                                    EmptyView()
-                                }
                             }
                         }
                         RuleMark(

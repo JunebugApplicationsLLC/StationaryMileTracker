@@ -8,18 +8,18 @@
 import CalendarProgressTracker
 import SwiftUI
 
-struct TrackedMileage: Identifiable {
+struct TrackedDay: Identifiable {
     var id: Day { day }
     var day: Day
-    @Binding var miles: Int
+    var miles: Int
 }
 
-extension TrackedMileage: Comparable {
-    static func < (lhs: TrackedMileage, rhs: TrackedMileage) -> Bool {
+extension TrackedDay: Comparable {
+    static func < (lhs: TrackedDay, rhs: TrackedDay) -> Bool {
         return lhs.day.date < rhs.day.date
     }
     
-    static func == (lhs: TrackedMileage, rhs: TrackedMileage) -> Bool {
+    static func == (lhs: TrackedDay, rhs: TrackedDay) -> Bool {
         return lhs.day.date == rhs.day.date
     }
 }

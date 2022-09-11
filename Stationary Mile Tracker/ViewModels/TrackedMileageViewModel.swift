@@ -21,13 +21,15 @@ class TrackedMileageViewModel: ObservableObject {
         return trackedMiles
     }
     
-    var trackedDays: [Day] {
-        var days: [Day] = []
+    var trackedDays: [TrackedDay] {
+        var days: [TrackedDay] = []
         let sortedTrackedDays = milesTrackedForDay.keys.sorted { day1, day2 in
             day1 < day2
         }
         sortedTrackedDays.forEach { day in
-            days.append(day)
+            guard let miles = milesTrackedForDay[day] else { return }
+            let trackedDay = TrackedDay(day: day, miles: miles)
+            days.append(trackedDay)
         }
         return days
     }
