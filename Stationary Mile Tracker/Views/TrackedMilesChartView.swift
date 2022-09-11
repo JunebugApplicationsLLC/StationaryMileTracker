@@ -1,5 +1,5 @@
 //
-//  MilesChartView.swift
+//  TrackedMilesChartView.swift
 //  Stationary Mile Tracker
 //
 //  Created by Erica Stevens on 9/10/22.
@@ -9,7 +9,7 @@ import CalendarProgressTracker
 import Charts
 import SwiftUI
 
-struct MilesChartView: View {
+struct TrackedMilesChartView: View {
     @EnvironmentObject internal var trackedMileageViewModel: TrackedMileageViewModel
     @State var goal: Int = 500
     @State var selectedChartStyleTypeIndex = 0
@@ -30,6 +30,8 @@ struct MilesChartView: View {
                     }
                     .pickerStyle(.segmented)
                     .frame(width: 100)
+                    .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+                    .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
                 }
             }
             .padding([.leading, .trailing], 20)
@@ -62,7 +64,7 @@ struct MilesChartView: View {
                             }
                         } else {
                             LineMark (
-                                x: PlottableValue.value("Date", "\(day.name) \(day.date)") ,
+                                x: PlottableValue.value("Date", "\(Month.monthValue(for: day.monthName))/\(day.date)") ,
                                 y: PlottableValue.value("Miles", trackedMileageViewModel.milesTrackedForDay[day] ?? 0)
                             )
                             .foregroundStyle(.pink)
@@ -84,11 +86,22 @@ struct MilesChartView: View {
                 }
                 .padding()
             }
-            HStack(spacing: 0.0) {
-                Text("Total Miles: \(trackedMileageViewModel.totalMilesTracked) / ")
+            HStack(alignment: .center, spacing: 0.0) {
+                currentProgressLabel
+                Text(" / ")
+                    .font(.largeTitle)
                 monthlyGoalButton
             }
         }
+    }
+    
+    var currentProgressLabel: some View {
+        Text("Total Miles: \(trackedMileageViewModel.totalMilesTracked)")
+            .bold()
+            .padding(8)
+            .background(Color.orange)
+            .foregroundColor(.white)
+            .cornerRadius(8.0)
     }
     
     var dailyGoalButton: some View {
@@ -98,6 +111,8 @@ struct MilesChartView: View {
             .background(Color.cyan)
             .foregroundColor(.white)
             .cornerRadius(8.0)
+            .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+            .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
     }
     
     var monthlyGoalButton: some View {
@@ -107,12 +122,14 @@ struct MilesChartView: View {
             .background(Color.blue)
             .foregroundColor(.white)
             .cornerRadius(8.0)
+            .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+            .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
     }
 }
 
-struct MilesChartView_Previews: PreviewProvider {
+struct TrackedMilesChartView_Previews: PreviewProvider {
     static var previews: some View {
-        MilesChartView()
+        TrackedMilesChartView()
             .environmentObject(TrackedMileageViewModel(highlightedDateViewModel: HighlightedDateViewModel(Calendar(identifier: .gregorian), TimeZone(identifier: "EST")!)))
     }
 }

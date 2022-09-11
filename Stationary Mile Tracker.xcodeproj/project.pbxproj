@@ -15,7 +15,7 @@
 		0729668C28C7EBB10063823A /* TrackedMileage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668B28C7EBB10063823A /* TrackedMileage.swift */; };
 		0729668E28C7EF450063823A /* TrackedMileageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */; };
 		0729669028C7EF840063823A /* CalendarTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0729668F28C7EF840063823A /* CalendarTrackerView.swift */; };
-		07FA0A7328CD33C6003A4FE7 /* MilesChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA0A7228CD33C6003A4FE7 /* MilesChartView.swift */; };
+		07FA0A7328CD33C6003A4FE7 /* TrackedMilesChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA0A7228CD33C6003A4FE7 /* TrackedMilesChartView.swift */; };
 		07FA0A7528CD33E3003A4FE7 /* ChartStyleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA0A7428CD33E3003A4FE7 /* ChartStyleType.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +29,7 @@
 		0729668B28C7EBB10063823A /* TrackedMileage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedMileage.swift; sourceTree = "<group>"; };
 		0729668D28C7EF450063823A /* TrackedMileageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedMileageViewModel.swift; sourceTree = "<group>"; };
 		0729668F28C7EF840063823A /* CalendarTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTrackerView.swift; sourceTree = "<group>"; };
-		07FA0A7228CD33C6003A4FE7 /* MilesChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilesChartView.swift; sourceTree = "<group>"; };
+		07FA0A7228CD33C6003A4FE7 /* TrackedMilesChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedMilesChartView.swift; sourceTree = "<group>"; };
 		07FA0A7428CD33E3003A4FE7 /* ChartStyleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartStyleType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,7 +96,7 @@
 			children = (
 				0729668F28C7EF840063823A /* CalendarTrackerView.swift */,
 				0729667B28C717170063823A /* ContentView.swift */,
-				07FA0A7228CD33C6003A4FE7 /* MilesChartView.swift */,
+				07FA0A7228CD33C6003A4FE7 /* TrackedMilesChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -194,7 +194,7 @@
 				07FA0A7528CD33E3003A4FE7 /* ChartStyleType.swift in Sources */,
 				0729667C28C717170063823A /* ContentView.swift in Sources */,
 				0729669028C7EF840063823A /* CalendarTrackerView.swift in Sources */,
-				07FA0A7328CD33C6003A4FE7 /* MilesChartView.swift in Sources */,
+				07FA0A7328CD33C6003A4FE7 /* TrackedMilesChartView.swift in Sources */,
 				0729668C28C7EBB10063823A /* TrackedMileage.swift in Sources */,
 				0729668E28C7EF450063823A /* TrackedMileageViewModel.swift in Sources */,
 				0729667A28C717170063823A /* Stationary_Mile_TrackerApp.swift in Sources */,
