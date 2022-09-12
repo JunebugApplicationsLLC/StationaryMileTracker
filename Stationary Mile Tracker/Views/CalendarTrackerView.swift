@@ -42,22 +42,19 @@ struct CalendarTrackerView: View {
             selectedDay = date
         }
         .sheet(item: $selectedDay) { selectedDay in
-            VStack(alignment: .center) {
+            HStack {
                 Text("Log Miles for\n\(selectedDay.fullDayName()), \(selectedDay.monthName) \(selectedDay.date):")
-                    .font(.title)
-                    .multilineTextAlignment(.center)
-                TextField(value: milesForDay, format: .number) {
-                    Text("Miles")
-                }
-                .focused($isFocused)
-                .keyboardType(.decimalPad)
-                .foregroundColor(.neumorphictextColor)
-                .background(Color.background)
-                .padding()
-                .cornerRadius(6)
-                .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
-                .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
-                .frame(alignment: .center)
+                    .multilineTextAlignment(.leading)
+                TextField("", value: milesForDay, format: .number)
+                    .frame(width: 50)
+                    .bold()
+                    .padding(8)
+                    .background(Color.orange)
+                    .foregroundColor(.white)
+                    .cornerRadius(8.0)
+                    .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+                    .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
+                    
             }
         }
     }

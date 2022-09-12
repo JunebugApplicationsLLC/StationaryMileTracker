@@ -27,7 +27,11 @@ class TrackedMileageViewModel: ObservableObject {
             day1 < day2
         }
         sortedTrackedDays.forEach { day in
-            guard let miles = milesTrackedForDay[day] else { return }
+            guard let miles = milesTrackedForDay[day],
+                  miles > 0 else {
+                // remove highlighted day from observable days
+                return
+            }
             let trackedDay = TrackedDay(day: day, miles: miles)
             days.append(trackedDay)
         }

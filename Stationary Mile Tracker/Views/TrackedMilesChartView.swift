@@ -15,10 +15,28 @@ struct TrackedMilesChartView: View {
     @State var dailyGoal = 15
     @State var selectedChartStyleTypeIndex = 0
     
+    @State var dailyGoalSheetPresented = false
+    @State var monthlyGoalSheetPresented = false
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack( alignment: .center, spacing: 0) {
-               dailyGoalButton
+                dailyGoalButton
+                    .opacity(1)
+                    .sheet(isPresented: $dailyGoalSheetPresented) {
+                        HStack {
+                            Text("Daily Goal:")
+                            TextField("", value: $dailyGoal, format: .number)
+                                .frame(width: 20)
+                                .bold()
+                                .padding(8)
+                                .background(Color.cyan)
+                                .foregroundColor(.white)
+                                .cornerRadius(8.0)
+                                .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+                                .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
+                        }
+                    }
                 Spacer()
                 VStack(spacing: 2) {
                     Text("CHART TYPE")
@@ -34,13 +52,13 @@ struct TrackedMilesChartView: View {
                     .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
                     .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
                 }
+                .opacity(trackedMileageViewModel.trackedDays.count < 2 ? 0 : 1)
             }
             .padding([.leading, .trailing], 20)
-            .opacity(trackedMileageViewModel.trackedDays.count < 2 ? 0 : 1)
             
             if trackedMileageViewModel.trackedDays.count < 2 {
                 Spacer()
-                Text("Log more miles to see trends over time")
+                Text("Tap a date to log miles. More data needed for chart statistics.")
                     .font(.caption).italic()
                 Spacer()
             } else {
@@ -51,13 +69,13 @@ struct TrackedMilesChartView: View {
                     Chart(trackedMileageViewModel.trackedDays) { trackedDay in
                         if ChartStyleType.allCases[$selectedChartStyleTypeIndex.wrappedValue] == ChartStyleType.bar {
                             BarMark (
-                                x: PlottableValue.value("Date", "\(trackedDay.day.name) \(trackedDay.day.date)") ,
+                                x: PlottableValue.value("Date", "\(Month.monthValue(for: trackedDay.day.monthName))/\(trackedDay.day.date)") ,
                                 y: PlottableValue.value("Miles", trackedDay.miles)
                             )
                             .foregroundStyle(trackedDay.miles  > dailyGoal ? .cyan : .pink)
                             .annotation {
                                 Text(verbatim: "\(trackedDay.miles)")
-                                        .font(.caption)
+                                    .font(.caption)
                             }
                         } else {
                             LineMark (
@@ -68,7 +86,7 @@ struct TrackedMilesChartView: View {
                             .symbol(Circle().strokeBorder(lineWidth: 2.0))
                             .annotation {
                                 Text(verbatim: "\(trackedDay.miles)")
-                                        .font(.caption)
+                                    .font(.caption)
                             }
                         }
                         RuleMark(
@@ -91,6 +109,21 @@ struct TrackedMilesChartView: View {
                 Text(" / ")
                     .font(.largeTitle)
                 monthlyGoalButton
+                    .sheet(isPresented: $monthlyGoalSheetPresented) {
+                        HStack {
+                            Text("Monthly Goal:")
+                            TextField("", value: $monthlyGoal, format: .number)
+                                .frame(width: 50)
+                                .bold()
+                                .padding(8)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8.0)
+                                .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+                                .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
+                            
+                        }
+                    }
             }
         }
     }
@@ -105,25 +138,33 @@ struct TrackedMilesChartView: View {
     }
     
     var dailyGoalButton: some View {
-        Text("Daily Goal: \(dailyGoal) miles")
-            .bold()
-            .padding(8)
-            .background(Color.cyan)
-            .foregroundColor(.white)
-            .cornerRadius(8.0)
-            .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
-            .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
+        Button {
+            dailyGoalSheetPresented.toggle()
+        } label: {
+            Text("Daily Goal: \(dailyGoal) miles")
+                .bold()
+                .padding(8)
+                .background(Color.cyan)
+                .foregroundColor(.white)
+                .cornerRadius(8.0)
+                .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+                .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
+        }
     }
     
     var monthlyGoalButton: some View {
-        Text("Monthly Goal: \(monthlyGoal)")
-            .bold()
-            .padding(8)
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8.0)
-            .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
-            .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
+        Button {
+            monthlyGoalSheetPresented.toggle()
+        } label: {
+            Text("Monthly Goal: \(monthlyGoal)")
+                .bold()
+                .padding(8)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8.0)
+                .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+                .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
+        }
     }
 }
 
