@@ -78,17 +78,23 @@ struct TrackedMilesChartView: View {
                                     .font(.caption)
                             }
                         } else {
+                            BarMark (
+                                x:PlottableValue.value("Date", "\(Month.monthValue(for: trackedDay.day.monthName))/\(trackedDay.day.date)") ,
+                                y: PlottableValue.value("Miles", trackedDay.miles)
+                            )
+                                .foregroundStyle(Color.clear)
+                                .annotation {
+                                    Text(verbatim: "\(trackedDay.miles)")
+                                        .font(.caption)
+                                }
                             LineMark (
                                 x: PlottableValue.value("Date", "\(Month.monthValue(for: trackedDay.day.monthName))/\(trackedDay.day.date)") ,
                                 y: PlottableValue.value("Miles", trackedDay.miles)
                             )
                             .foregroundStyle(.pink)
                             .symbol(Circle().strokeBorder(lineWidth: 2.0))
-                            .annotation {
-                                Text(verbatim: "\(trackedDay.miles)")
-                                    .font(.caption)
-                            }
                         }
+                        
                         RuleMark(
                             y: .value("Average", trackedMileageViewModel.averageMilesPerDay)
                         )
